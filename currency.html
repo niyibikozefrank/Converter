@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>XYZ-COMPANY Currency Exchange Platform</title>
+  <style>
+    body {
+      background: #f5f5f5;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background: #18125a;
+      color: #fff;
+      text-align: center;
+      padding: 40px 0 20px 0;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      letter-spacing: 2px;
+    }
+    .header p {
+      margin: 10px 0 0 0;
+      font-size: 1.2em;
+      letter-spacing: 1px;
+    }
+    .converter-box {
+      background: #fff;
+      max-width: 600px;
+      margin: -40px auto 0 auto;
+      padding: 40px 30px 30px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .form-row {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 30px;
+      width: 100%;
+      justify-content: center;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      min-width: 150px;
+    }
+    .form-group label {
+      margin-bottom: 6px;
+      font-weight: bold;
+      font-size: 0.95em;
+    }
+    .form-group input,
+    .form-group select {
+      padding: 8px 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+    }
+    .convert-btn {
+      background: #18125a;
+      color: #fff;
+      border: none;
+      padding: 12px 40px;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: background 0.2s;
+    }
+    .convert-btn:hover {
+      background: #2a1e7c;
+    }
+    .result-label {
+      font-weight: bold;
+      font-size: 1em;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+    .result-value {
+      font-size: 2em;
+      font-weight: bold;
+      color: #18125a;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>XYZ-COMPANY</h1>
+    <p>CURRENCY EXCHANGE PLATFORM</p>
+  </div>
+  <div class="converter-box">
+    <form id="currencyForm" onsubmit="return false;">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <input type="number" id="amount" value="" min="" required>
+        </div>
+        <div class="form-group">
+          <label for="from">From</label>
+          <select id="from">
+            <option value="RWF">RWF - RWF</option>
+            <option value="USD">USD - $</option>
+            <option value="EUR">EUR - €</option>
+            <option value="GBP">GBP - £</option>            
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="to">To</label>
+          <select id="to">
+            <option value="RWF">RWF - RWF</option>
+            <option value="USD">USD - $</option>
+            <option value="EUR">EUR - €</option>
+            <option value="GBP">GBP - £</option>
+          </select>
+        </div>
+      </div>
+      <button class="convert-btn" onclick="convertCurrency()">Convert</button>
+    </form>
+    <div class="result-label">Result</div>
+    <div class="result-value" id="result"></div>
+  </div>
+  <script>
+    // Example exchange rates (for demo purposes)
+    const rates = {
+      'USD': { 'RWF': 1441.26, 'GBP': 0.75163, 'EUR': 0.889 },
+      'EUR': { 'RWF': 1621.48, 'USD': 1.1251, 'GBP': 0.84567  },
+      'GBP': { 'RWF': 1923.44, 'USD': 1.3304, 'EUR': 1.1793 },
+      'RWF': { 'USD': 0.00069, 'EUR': 0.00061, 'GBP': 0.000519}
+    };
+
+    function convertCurrency() {
+      const amount = parseFloat(document.getElementById('amount').value);
+      const from = document.getElementById('from').value;
+      const to = document.getElementById('to').value;
+      let result = 0;
+
+      if (rates[from] && rates[from][to]) {
+        result = amount * rates[from][to];
+      } else if (from === to) {
+        result = amount;
+      } else {
+        result = 'N/A';
+      }
+
+      document.getElementById('result').textContent = 
+        typeof result === 'number' ? result.toLocaleString() : result;
+    }
+  </script>
+</body>
+</html>
